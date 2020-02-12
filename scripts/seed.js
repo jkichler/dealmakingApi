@@ -10,7 +10,6 @@ const createParties = async (num) => {
         name: faker.company.companyName(),
         email: faker.internet.email()
       });
-      console.log(`created ${newParty.name}`);
     }
   } catch (error) {
     console.error(error);
