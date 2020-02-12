@@ -25,6 +25,8 @@ The data for parties deals and bids was kept to a minimum to complete the assign
 
 ### Install
 
+clone this repository and navigate to the root directory of the repo then run:
+
 ```
 npm install
 ```
@@ -33,7 +35,7 @@ npm install
 
 Start application:
 
-This command will create the db and db tables in memory, seed dummy data, and start the express application
+This command will create the db and db tables in memory, seed dummy data, and start the express application.
 
 ```
 npm run start
