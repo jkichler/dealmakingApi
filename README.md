@@ -39,7 +39,7 @@ This command will create the db and db tables in memory, seed dummy data, and st
 npm run start
 ```
 
-## Routes
+## REST Routes
 
 ### ------Parties Route------
 
