@@ -42,7 +42,8 @@ const syncDb = () => db.sync({ force: true });
 
 const bootApp = async () => {
   await syncDb();
-  await seed(10);
+  // put number of fake parties and deals to create here
+  await seed(20);
   await createApp();
   await startListening();
 };
