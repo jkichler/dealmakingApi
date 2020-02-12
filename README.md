@@ -4,6 +4,15 @@ Task:
 
 develop a simple workflow that can be used to represent a financial asset marketplace transaction using either Typescript or vanilla NodeJS.
 
+### Requirements
+
+Build an API interface with endpoints that do the following: - Create and update Deal objects
+
+- Create and update Bid objects
+- Associate a Bid with a Deal
+- Return the "best" Bid on a Deal (by price)
+- Allow the owner of a Deal to "accept" a Bid, closing it off from future Bids being offered and moving the transaction onto the next phase
+
 ### Approach:
 
 My first major decision was how to store the data for this soluton. First, the requirements of parties, deals, and bids just seemed natuaral for a SQL database. I chose SQLite because it is easy to set up and can be installed from NPM and included in package.json. This makes it easy for a project like this to be sent and installed without any complex data setup on the backend. All data is dummy data and will be created on appliction start. The databse is run in-memory so there is no file stroage.
@@ -32,7 +41,7 @@ npm run start
 
 ## Routes
 
-### Parties Route
+### ------Parties Route------
 
 GET localhost:3000/api/parties
 
@@ -53,9 +62,9 @@ example:
 curl --location --request GET 'http://localhost:3000/api/parties/2'
 ```
 
-\*\*\* note: no authentication is set up, but a production enviroment should require authentication and authorization.
+##### note: no authentication is set up, but a production enviroment should require authentication and authorization.
 
-### Deals Route
+### ------Deals Route-------
 
 GET localhost:3000/api/deals
 
@@ -94,7 +103,7 @@ curl --location --request POST 'http://localhost:3000/api/deals/' \
 --data-urlencode 'asset=test-asset'
 ```
 
-\*\*\* note: info was kept minimal for this exercise but a real deal would have many more details and/or features.
+##### note: info was kept minimal for this exercise but a real deal would have many more details and/or features.
 
 PUT localhost:3000/api/deals/:id
 
@@ -103,6 +112,8 @@ this route updates a specific deal
 the body of the route should contain:
 partyId (id number of party modfiying the deal)
 status (the status of the deal: 'open', 'closed', 'cancelled')
+
+##### note: a closed status accepts the top deal
 
 example:
 
@@ -113,11 +124,11 @@ curl --location --request PUT 'http://localhost:3000/api/deals/1' \
 --data-urlencode 'status=closed'
 ```
 
-\*\*\* note: the partyId in the body of the PUT must match the partyId of the deal object. Only owner of the deal can close the deal.
+##### note: the partyId in the body of the PUT must match the partyId of the deal object. Only owner of the deal can close the deal.
 
-\*\*\* note: closing a deal will accept the highest bid and reject all other bids in the status field of the bid.
+##### note: closing a deal will accept the highest bid and reject all other bids in the status field of the bid.
 
-### Bids Route
+### -------Bids Route--------
 
 GET localhost:3000/api/bids
 
@@ -175,4 +186,7 @@ curl --location --request PUT 'http://localhost:3000/api/bids/9' \
 --data-urlencode 'amount=1.00'
 ```
 
-\*\*\* note: the partyId in the body of the PUT must match the partyId of the bid object. Only owner of the bid can modify it.
+##### note: the partyId in the body of the PUT must match the partyId of the bid object. Only owner of the bid can modify it.
+
+Postman collection of example routes:
+https://www.postman.com/collections/bae26497877267f6e50a
