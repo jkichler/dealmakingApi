@@ -25,10 +25,28 @@ Bids.beforeSave((bid) => {
 /* using a hook to see if any  bid is the highest for that deal and updating the topBid on the deal if two bids of the same amount are top, the first submitted will be the top bid*/
 Bids.afterSave(async (bid) => {
   const deal = await bid.getDeal();
+  //check to see if new amount is top deal
   if (bid.amount > deal.topBid) {
     await deal.update({
       topBid: bid.amount,
       topBidId: bid.id
+    });
+  }
+  //handles lowering price of top deal
+  if (bid.amount < deal.topBid && bid.id === deal.topBidId) {
+    let newTopBid = bid.amount;
+    let newTopBidId = bid.id;
+    let bids = await deal.getBids();
+    //checking all bids to find new top bid
+    bids.forEach((el) => {
+      if (el.amount > newTopBid) {
+        newTopBid = el.amount;
+        newTopBidId = el.id;
+      }
+    });
+    await deal.update({
+      topBid: newTopBid,
+      topBidId: newTopBidId
     });
   }
 });
